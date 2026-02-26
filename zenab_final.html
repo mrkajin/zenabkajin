@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>تجربة زينب السينمائية 💜</title>
+<style>
+body{
+  margin:0; padding:0;
+  font-family:Arial, sans-serif;
+  overflow:hidden;
+  height:100vh;
+  background:linear-gradient(-45deg,#4b0082,#6a0dad,#8a2be2,#da70d6);
+  background-size:400% 400%;
+  animation:gradientBG 20s ease infinite;
+  color:white; text-align:center;
+}
+@keyframes gradientBG{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+.container{
+  position:absolute; z-index:2;
+  width:100%; max-width:800px; margin:auto;
+  padding:40px; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+}
+input{
+  padding:12px; border-radius:25px; border:none;
+  width:220px; text-align:center; font-size:16px;
+}
+button{
+  background:#8a2be2; color:white; border:none;
+  padding:12px 30px; border-radius:30px;
+  font-size:16px; cursor:pointer; margin:10px;
+  position:relative;
+}
+button:hover{transform:scale(1.05);transition:0.2s;}
+.hidden{display:none;}
+.pulse{font-size:40px; animation:pulse 1.5s infinite;}
+@keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.2);}100%{transform:scale(1);}}
+.heart{position:absolute;color:#da70d6;animation:float 6s linear infinite;}
+@keyframes float{0%{transform:translateY(100vh) scale(0.5);opacity:1;}100%{transform:translateY(-10vh) scale(1.5);opacity:0;}}
+.explosion{position:absolute;font-size:30px;color:#da70d6;animation:explode 1s ease forwards;pointer-events:none;}
+@keyframes explode{0%{transform:scale(0.5);opacity:1;}100%{transform:scale(3);opacity:0;}}
+.typing{border-right:2px solid white;white-space:pre-line;overflow:hidden;}
+.doll{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:180px;animation:floatDoll 5s ease-in-out infinite;}
+@keyframes floatDoll{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(-25px);}}
+.eye{width:15px;height:15px;background:#fff;border-radius:50%;position:absolute;top:45px;left:50px;}
+.star{position:absolute;color:#fff;font-size:12px;animation:twinkle 2s infinite alternate;}
+@keyframes twinkle{0%{opacity:0.2;}100%{opacity:1;}}
+</style>
+</head>
+<body>
+
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b3b1a5d3.mp3?filename=romantic-ambient-11047.mp3" type="audio/mpeg">
+</audio>
+
+<!-- المرحلة 0: دخول باسم -->
+<div class="container" id="login">
+<h2>هذه الصفحة لا تُفتح إلا باسم واحد 💜</h2>
+<input type="text" id="pass" placeholder="اكتبي اسمك">
+<br>
+<button onclick="enter()">دخول</button>
+</div>
+
+<!-- المرحلة 1: السؤال الأول -->
+<div class="container hidden" id="main1">
+<h1 class="pulse">زينب 💜</h1>
+<p>9 نوفمبر 2024 – بداية كل شيء 💜</p>
+<h2>هل تحبيني؟</h2>
+<button id="yesBtn" onclick="yesClick()">نعم 💜</button>
+<button id="noBtn" onclick="noClick()">لا 😡</button>
+<div id="message" class="hidden typing"></div>
+</div>
+
+<!-- المرحلة 2: الاعتراف -->
+<div class="container hidden" id="main2">
+<h1 class="pulse">تاريخ حبنا 💜</h1>
+<p id="story"></p>
+<button onclick="nextPhase3()">التالي 💜</button>
+</div>
+
+<!-- المرحلة 3: لعبة أسئلة -->
+<div class="container hidden" id="main3">
+<h1 class="pulse">لعبتنا الأولى 💜</h1>
+<p>سؤال عني: أنا أحب اللون؟</p>
+<button onclick="gameAnswer(true)">أزرق 💜</button>
+<button onclick="gameAnswer(false)">أخضر 😡</button>
+<div id="gameMessage" class="typing hidden"></div>
+</div>
+
+<!-- المرحلة 4: لعبة الحكايات -->
+<div class="container hidden" id="main4">
+<h1 class="pulse">لعبتنا الثانية 💜</h1>
+<p>اختاري أفضل لحظة رومانسية من حكاياتنا:</p>
+<button onclick="storyGame(1)">أول رسالة 💌</button>
+<button onclick="storyGame(2)">لقاء مسائي 🌙</button>
+<button onclick="storyGame(3)">ضحك مع بعض 😂</button>
+<div id="storyGameMessage" class="typing hidden"></div>
+</div>
+
+<!-- المرحلة 5: لعبة ترتيب الأحداث -->
+<div class="container hidden" id="main5">
+<h1 class="pulse">لعبتنا الثالثة 💜</h1>
+<p>رتبي أحداث حبنا حسب التسلسل الصحيح:</p>
+<button onclick="orderGame(1)">لقاء مسائي 🌙</button>
+<button onclick="orderGame(2)">أول رسالة 💌</button>
+<button onclick="orderGame(3)">ضحك مع بعض 😂</button>
+<div id="orderGameMessage" class="typing hidden"></div>
+</div>
+
+<!-- المرحلة 6: مفاجآت -->
+<div class="container hidden" id="main6">
+<h1 class="pulse">مفاجآت 💜</h1>
+<p id="surprise"></p>
+<button onclick="nextPhase7()">التالي 💜</button>
+</div>
+
+<!-- المرحلة 7: لعبة اختيار العاطفة -->
+<div class="container hidden" id="main7">
+<h1 class="pulse">لعبتنا الرابعة 💜</h1>
+<p>اختاري شعورك تجاه قلبي:</p>
+<button onclick="emotionGame(1)">حب 💜</button>
+<button onclick="emotionGame(2)">غضب 😡</button>
+<button onclick="emotionGame(3)">ضحك 😂</button>
+<div id="emotionMessage" class="typing hidden"></div>
+</div>
+
+<!-- المرحلة 8: لعبة المفاجآت الصغيرة -->
+<div class="container hidden" id="main8">
+<h1 class="pulse">لعبتنا الخامسة 💜</h1>
+<p>أختر مفاجأة عشوائية 💜</p>
+<button onclick="miniGame(1)">رسالة سرية 💌</button>
+<button onclick="miniGame(2)">قلب انفجار 💥</button>
+<button onclick="miniGame(3)">نبض 💓</button>
+<div id="miniMessage" class="typing hidden"></div>
+</div>
+
+<!-- المرحلة 9: قبل الخاتمة -->
+<div class="container hidden" id="main9">
+<h1 class="pulse">لحظة رومانسية 💜</h1>
+<p id="beforeEnd"></p>
+<button onclick="nextPhase10()">التالي 💜</button>
+</div>
+
+<!-- المرحلة 10: الخاتمة -->
+<div class="container hidden" id="main10">
+<h1 class="pulse">الخاتمة السينمائية 💜</h1>
+<p>أتمنى أن تكوني كل حياتي وليس زوجتي فقط… أعشقك 💜</p>
+</div>
+
+<!-- الدبدوب -->
+<img src="https://i.ibb.co/yYyVd5h/teddy.png" class="doll" id="doll">
+
+<script>
+// قلوب متطايرة
+function createHeart(){
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(Math.random()*20+15)+"px";
+heart.style.animationDuration=(Math.random()*3+3)+"s";
+document.body.appendChild(heart);
+setTimeout(()=>{heart.remove();},6000);
+}
+setInterval(createHeart,400);
+
+// المرحلة 0
+function enter(){
+let p=document.getElementById("pass").value;
+if(p==="زينب"){
+document.getElementById("login").style.display="none";
+document.getElementById("main1").style.display="block";
+document.getElementById("music").play();
+}else{
+alert("مو هذا الاسم 💜");
+}}
+
+// المرحلة 1
+let noMessages=[
+"محد يجي بعيني 😡💜",
+"اغاتي… اختاري نعم 💜❤️",
+"لا ما ينفع تضغط هسه 💜",
+"قلبي انفجر! 😡💜",
+"حبنا أقوى من كلمة لا 💜"
+];
+function yesClick(){
+alert("أنتِ نعم قلبي 💜❤️");
+document.getElementById("main1").style.display="none";
+document.getElementById("main2").style.display="block";
+storyPhase();
+}
+function noClick(){
+let btn=document.getElementById("noBtn");
+btn.style.position="absolute";
+btn.style.top=Math.random()*70+"vh";
+btn.style.left=Math.random()*70+"vw";
+let msg=noMessages[Math.floor(Math.random()*noMessages.length)];
+typeWriter(msg,"message");
+createExplosion();
+enlargeYes();
+}
+function typeWriter(text,id){
+let i=0;
+let container=document.getElementById(id);
+container.style.display="block";
+container.innerHTML="";
+function typing(){
+if(i<text.length){
+container.innerHTML+=text.charAt(i);
+i++;
+setTimeout(typing,40);
+}}
+typing();
+}
+function createExplosion(){
+const exp=document.createElement("div");
+exp.classList.add("explosion");
+exp.innerHTML="💜💥";
+exp.style.left=(window.innerWidth/2 + (Math.random()*100-50))+"px";
+exp.style.top=(window.innerHeight/2 + (Math.random()*100-50))+"px";
+document.body.appendChild(exp);
+setTimeout(()=>{exp.remove();},1000);
+}
+function enlargeYes(){
+let yesBtn=document.getElementById("yesBtn");
+let style=window.getComputedStyle(yesBtn);
+let size=parseInt(style.fontSize);
+yesBtn.style.fontSize=(size+2)+"px";
+}
+
+// المرحلة 2: حكاية الحب
+function storyPhase(){
+let text=`زينب…  
+من أول رسالة يوم 9 نوفمبر، حبنا كبر تدريجياً.  
+حياتي كانت ضياع ودمار…  
+وأنتِ حولتِ حياتي إلى حياة مليئة بالحب 💜`;
+typeWriter(text,"story");
+}
+function nextPhase3(){document.getElementById("main2").style.display="none";document.getElementById("main3").style.display="block";}
+
+// المرحلة 3
+function gameAnswer(correct){
+let container=document.getElementById("gameMessage");
+container.classList.remove("hidden");
+if(correct){
+container.innerHTML="صح 💜 انت تعرفني جيداً!";
+document.getElementById("main3").style.display="none";
+document.getElementById("main4").style.display="block";
+}else{
+container.innerHTML="خطأ! 😡 حاول مرة أخرى";
+createExplosion();
+}}
+
+// المرحلة 4
+function storyGame(choice){
+let container=document.getElementById("storyGameMessage");
+container.classList.remove("hidden");
+let messages=[
+"تذكري أول رسالة 💌 كانت مليئة بالشوق...",
+"لقاءنا المسائي 🌙 حيث ضحكنا بلا توقف...",
+"ضحكنا مع بعض 😂 كل لحظة كانت حلوة..."
+];
+container.innerHTML="اختيارك: "+messages[choice-1];
+document.getElementById("main4").style.display="none";
+document.getElementById("main5").style.display="block";
+}
+
+// المرحلة 5
+function orderGame(choice){
+let container=document.getElementById("orderGameMessage");
+container.classList.remove("hidden");
+if(choice===2){container.innerHTML="صح 💜";document.getElementById("main5").style.display="none";document.getElementById("main6").style.display="block";}
+else{container.innerHTML="خطأ! 😡 حاول مرة أخرى";createExplosion();}}
+
+// المرحلة 6
+function nextPhase7(){
+document.getElementById("main6").style.display="none";
+document.getElementById("main7").style.display="block";
+typeWriter("مفاجأة! 💜 كل لحظة معك كانت حلم…", "surprise");
+}
+
+// المرحلة 7
+function emotionGame(choice){
+let container=document.getElementById("emotionMessage");
+container.classList.remove("hidden");
+let msgs=["حب 💜","غضب 😡","ضحك 😂"];
+container.innerHTML="اختيارك: "+msgs[choice-1];
+document.getElementById("main7").style.display="none";
+document.getElementById("main8").style.display="block";
+}
+
+// المرحلة 8
+function miniGame(choice){
+let container=document.getElementById("miniMessage");
+container.classList.remove("hidden");
+let msgs=["رسالة سرية 💌","قلب انفجار 💥","نبض 💓"];
+container.innerHTML="لقد حصلت على: "+msgs[choice-1];
+document.getElementById("main8").style.display="none";
+document.getElementById("main9").style.display="block";
+}
+
+// المرحلة 9
+function nextPhase10(){
+document.getElementById("main9").style.display="none";
+document.getElementById("main10").style.display="block";
+}
+
+</script>
+</body>
+</html>
